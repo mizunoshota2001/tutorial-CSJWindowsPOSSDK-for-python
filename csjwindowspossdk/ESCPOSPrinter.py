@@ -1,21 +1,12 @@
 import clr
 from pathlib import Path
-from typing import TypedDict
-
+from ._types import CitizenPrinterInfo
 dllPath = Path(__file__).parent/"Library"/"CSJPOSLib.dll"
 
 
 def setDllPath(path: str):
     global dllPath
     dllPath = path
-
-
-class CitizenPrinterInfo(TypedDict):
-    ipAddress: str
-    macAddress: str
-    bdAddress: str
-    deviceName: str
-    printerModel: str
 
 
 class ESCPOSPrinter:

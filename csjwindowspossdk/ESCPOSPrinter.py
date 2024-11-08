@@ -1,11 +1,21 @@
 import clr
 from pathlib import Path
+from typing import TypedDict
+
 dllPath = Path(__file__).parent/"Library"/"CSJPOSLib.dll"
 
 
 def setDllPath(path: str):
     global dllPath
     dllPath = path
+
+
+class CitizenPrinterInfo(TypedDict):
+    ipAddress: str
+    macAddress: str
+    bdAddress: str
+    deviceName: str
+    printerModel: str
 
 
 class ESCPOSPrinter:
@@ -45,26 +55,31 @@ class ESCPOSPrinter:
     def PrintTextPCFont(self, data: str, alignment: int, fntName: str, point: int, style: int, hRatio: int, vRatio: int):
         return self.__printer.PrintTextPCFont(data, alignment, fntName, point, style, hRatio, vRatio)
 
-    def PrintBitmap(self, filePath, alignment):
-        raise Exception("Not implemented")
+    def PrintBitmap(self, fileName: str, alignment: int, width: int = None, mode: int = None) -> int:
+        args = [fileName, alignment]
+        width and args.append(width)
+        mode and args.append(mode)
+        return self.__printer.PrintBitmap(*args)
 
-    def SetNVBitmap(self, filePath):
-        raise Exception("Not implemented")
+    def SetNVBitmap(self, number: int, fileName: str, width: int, mode: int = None) -> int:
+        args = [number, fileName, width]
+        mode and args.append(mode)
+        return self.__printer.SetNVBitmap(*args)
 
-    def PrintNVBitmap(self, alignment):
-        raise Exception("Not implemented")
+    def PrintNVBitmap(self, nvImageNumber: int, alignment: int) -> int:
+        return self.__printer.PrintNVBitmap(nvImageNumber, alignment)
 
     def PrintBarCode(self, data: str, symbology: int, height: int, width: int, alignment: int, textPosition: int):
         return self.__printer.PrintBarCode(data, symbology, height, width, alignment, textPosition)
 
-    def PrintPDF417(self, data, columns, rows, width, height, errorCorrectionLevel, alignment):
-        raise Exception("Not implemented")
+    def PrintPDF417(self, data: str, columns: int, rows: int, width: int, height: int, ECLevel: int, alignment: int) -> int:
+        return self.__printer.PrintPDF417(data, columns, rows, width, height, ECLevel, alignment)
 
     def PrintQRCode(self, data: str, moduleSize: int, ECLevel: int, alignment: int):
         return self.__printer.PrintQRCode(data, moduleSize, ECLevel, alignment)
 
-    def PrintGS1DataBarStacked():
-        raise Exception("Not implemented")
+    def PrintGS1DataBarStacked(self, data: str, symbology: int, moduleSize: int, maxSize: int, alignment: int) -> int:
+        return self.__printer.PrintGS1DataBarStacked(data, symbology, moduleSize, maxSize, alignment)
 
     def CutPaper(self, type: int):
         return self.__printer.CutPaper(type)
@@ -97,25 +112,34 @@ class ESCPOSPrinter:
         return self.__printer.PrintData(data)
 
     def PrintNormal(self, data: str) -> int:
-        return self.__printer.PrintNormal(data.encode('utf-8'))
+        return self.__printer.PrintNormal(data)
 
     def WatermarkPrint(self, start: int, nvImageNumber: int, pass_num: int, feed: int, repeat: int) -> int:
         return self.__printer.WatermarkPrint(start, nvImageNumber, pass_num, feed, repeat)
 
-    def SearchCitizenPrinter(self, connectType: int, searchTime: int) -> list:
-        return self.__printer.SearchCitizenPrinter(connectType, searchTime)
+    def SearchCitizenPrinter(self, connectType: int, searchTime: int) -> tuple[CitizenPrinterInfo, int]:
+        result: int = 0
+        return self.__printer.SearchCitizenPrinter(connectType, searchTime, result)
 
-    def SearchESCPOSPrinter(self, connectType: int, searchTime: int) -> list[str]:
-        return self.__printer.SearchESCPOSPrinter(connectType, searchTime)
+    def SearchESCPOSPrinter(self, connectType: int, searchTime: int) -> tuple[list[str], int]:
+        result: int = 0
+        return self.__printer.SearchESCPOSPrinter(connectType, searchTime, result)
 
     def SetIPSettings(self, macAddress: str, enableDHCP: bool, ipAddress: str, subnetMask: str, defaultGateway: str) -> int:
         return self.__printer.SetIPSettings(macAddress, enableDHCP, ipAddress, subnetMask, defaultGateway)
 
-    def PrinterCheckEx(self, connectType, addr, port=None, timeout=None):
-        raise Exception("Not implemented")
+    def PrinterCheckEx(self, connectType: int, addr: str, port: int = None, timeout: int = None) -> tuple[int, int]:
+        status: int = 0
+        args = [status, connectType, addr]
+        port and args.append(port)
+        timeout and args.append(timeout)
+        return self.__printer.PrinterCheckEx(*args)
 
-    def OpenDrawerEx(self, connectType, addr, port=None, timeout=None):
-        raise Exception("Not implemented")
+    def OpenDrawerEx(self, drawer: int, pulseLen: int, connectType: int, addr: str, port: int = None, timeout: int = None) -> int:
+        args = [drawer, pulseLen, connectType, addr]
+        port and args.append(port)
+        timeout and args.append(timeout)
+        return self.__printer.OpenDrawerEx(*args)
 
     def SetPrintCompletedTimeout(self, timeout: int) -> int:
         return self.__printer.SetPrintCompletedTimeout(timeout)

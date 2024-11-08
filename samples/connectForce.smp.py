@@ -12,7 +12,6 @@ def connectForce(connectType: int, addr: int, wait: int = 5) -> ESCPOSPrinter:
     return printer
 
 
-printer: ESCPOSPrinter
 printer = connectForce(
     ESCPOSConst.CMP_PORT_Bluetooth, "00:01:90:DF:C9:11")
 print(printer.PrinterCheck())

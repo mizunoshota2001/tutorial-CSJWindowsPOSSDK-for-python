@@ -6,7 +6,9 @@ import time
 def connectForce(connectType: int, addr: int, wait: int = 5) -> ESCPOSPrinter:
     printer = ESCPOSPrinter()
     while printer.Connect(connectType, addr) != ESCPOSConst.CMP_SUCCESS:
-        print("Reconnecting...") and time.sleep(wait)
+        printer.Disconnect()
+        time.sleep(wait)
+        print("Reconnecting...")
     return printer
 
 

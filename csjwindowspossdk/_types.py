@@ -1,4 +1,6 @@
 from typing import TypedDict
+
+
 class CitizenPrinterInfo(TypedDict):
     ipAddress: str
     macAddress: str

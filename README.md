@@ -24,7 +24,7 @@ Citizen Systems 株式会社の Windows POS Print SDK を利用しています�
 
 DLL ファイルを別の場所に配置したい場合は、[`/samples/setDllPath.smp.py`](samples/setDllPath.smp.py) の設定用サンプルをご参照ください。
 
-ダウンロード後、ご自身でインストールしたライブラリのパスを指定してください（`__path` の部分）。
+ダウンロード後、ご自身でインストールしたライブラリのパスを指定してください。
 
 ## 不具合調査
 

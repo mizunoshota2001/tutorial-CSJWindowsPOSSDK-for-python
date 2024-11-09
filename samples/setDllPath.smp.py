@@ -4,7 +4,7 @@ from csjwindowspossdk import ESCPOSConst, ESCPOSPrinter, setDllPath
 
 # 使用するSDKのライブラリを以下のURLからダウンロードしてください。
 # https://www.citizen-systems.co.jp/cms/c-s/printer/download/sdk-print/CSJWindowsPOSSDK_V206J.zip
-# ご自身でインストールしたライブラリのパスを指定してください (__path の部分)。
+# ご自身でインストールしたライブラリのパスを指定してください。
 
 __root = Path(__file__).parent.parent
 __path = __root/"csjwindowspossdk"/"Library"/"CSJPOSLib.dll"

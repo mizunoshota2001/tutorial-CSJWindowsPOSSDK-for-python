@@ -1,4 +1,5 @@
 # プログラムマニュアル2.1 for python
+import samples.config as config
 import __relimport
 from csjwindowspossdk import ESCPOSConst, ESCPOSPrinter
 printer = ESCPOSPrinter()

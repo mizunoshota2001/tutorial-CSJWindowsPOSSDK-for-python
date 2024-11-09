@@ -11,6 +11,8 @@ def setDllPath(path: str):
 
 class ESCPOSPrinter:
     def __init__(self):
+        if not dllPath.exists():
+            raise FileNotFoundError(f"CSJPOSLib.dll not found in {dllPath}")
         clr.AddReference(str(dllPath))
         import com.citizen.sdk
         self.__printer = com.citizen.sdk.ESCPOSPrinter()

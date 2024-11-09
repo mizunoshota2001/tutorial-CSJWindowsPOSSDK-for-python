@@ -1,11 +1,10 @@
 import __relimport
-import time
+import config
 from csjwindowspossdk import ESCPOSConst, ESCPOSPrinter
 
+
 printer = ESCPOSPrinter()
-printer.Connect(ESCPOSConst.CMP_PORT_Bluetooth, "00:01:90:DF:C9:11")
-time.sleep(3)
+response = printer.Connect(config.CONTENT_TYPE, config.ADDR)
+if response == ESCPOSConst.CMP_SUCCESS:
+    print("Successfully connected to the printer.")
 printer.Disconnect()
-
-
-

@@ -4,7 +4,6 @@ from csjwindowspossdk import ESCPOSConst, ESCPOSPrinter
 
 
 printer = ESCPOSPrinter()
-
 print("Searching the printer...")
 searchTime = 10  # 推奨値
 responce, status = printer.SearchESCPOSPrinter(config.CONTENT_TYPE, searchTime)

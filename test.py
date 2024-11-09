@@ -1,0 +1,1 @@
+print()"\033[4C".encode('ansi'))

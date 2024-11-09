@@ -13,6 +13,6 @@ def ConnectForce(printer: ESCPOSPrinter, connectType: int, addr: int, wait: int 
 
 
 printer = ESCPOSPrinter()
-printer = ConnectForce(printer, config.CONTENT_TYPE, config.ADDR)
+printer = ConnectForce(printer, config.CONTENT_TYPE, config.ADDR, output=True)
 print("Successfully connected to the printer.")
 printer.Disconnect()

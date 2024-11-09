@@ -1,6 +1,5 @@
 import clr
 from pathlib import Path
-from ._types import CitizenPrinterInfo
 dllPath = Path(__file__).parent/"Library"/"CSJPOSLib.dll"
 
 
@@ -9,9 +8,21 @@ def setDllPath(path: str):
     dllPath = path
 
 
+class CitizenPrinterInfo:
+    def __init__(self, ipAddress: str, macAddress: str, bdAddress: str, deviceName: str, printerModel: str, **kwargs):
+        self.ipAddress = ipAddress
+        self.macAddress = macAddress
+        self.bdAddress = bdAddress
+        self.deviceName = deviceName
+        self.printerModel = printerModel
+
+
 class ESCPOSPrinter:
     def __init__(self):
+        if not dllPath.exists():
+            raise FileNotFoundError(f"CSJPOSLib.dll not found in {dllPath}")
         clr.AddReference(str(dllPath))
+        # This import may cause an error in some IDEs or linters because the DLL is dynamically loaded at runtime
         import com.citizen.sdk
         self.__printer = com.citizen.sdk.ESCPOSPrinter()
 
@@ -108,13 +119,19 @@ class ESCPOSPrinter:
     def WatermarkPrint(self, start: int, nvImageNumber: int, pass_num: int, feed: int, repeat: int) -> int:
         return self.__printer.WatermarkPrint(start, nvImageNumber, pass_num, feed, repeat)
 
-    def SearchCitizenPrinter(self, connectType: int, searchTime: int) -> tuple[CitizenPrinterInfo, int]:
+    def SearchCitizenPrinter(self, connectType: int, searchTime: int) -> tuple[list[CitizenPrinterInfo], int]:
         result: int = 0
-        return self.__printer.SearchCitizenPrinter(connectType, searchTime, result)
+        data, result = self.__printer.SearchCitizenPrinter(
+            connectType, searchTime, result)
+        data = [{k: getattr(x, k) for k in dir(x)} for x in data]
+        data = [CitizenPrinterInfo(**x) for x in data]
+        return data, result
 
     def SearchESCPOSPrinter(self, connectType: int, searchTime: int) -> tuple[list[str], int]:
         result: int = 0
-        return self.__printer.SearchESCPOSPrinter(connectType, searchTime, result)
+        data, result = self.__printer.SearchESCPOSPrinter(
+            connectType, searchTime, result)
+        return list(data), result
 
     def SetIPSettings(self, macAddress: str, enableDHCP: bool, ipAddress: str, subnetMask: str, defaultGateway: str) -> int:
         return self.__printer.SetIPSettings(macAddress, enableDHCP, ipAddress, subnetMask, defaultGateway)

@@ -6,7 +6,7 @@ printer = ESCPOSPrinter()
 printer.SetCommProperties(ESCPOSConst.CMP_COM_BAUDRATE_9600,
                           ESCPOSConst.CMP_COM_PARITY_NONE,
                           ESCPOSConst.CMP_COM_HANDSHAKE_DTRDSR)
-result = printer.Connect(ESCPOSConst.CMP_PORT_COM, "COM4:")
+result = printer.Connect(config.CONTENT_TYPE, config.ADDR)
 if (ESCPOSConst.CMP_SUCCESS == result):
     printer.SetEncoding("Shift_JIS")
     printer.TransactionPrint(ESCPOSConst.CMP_TP_TRANSACTION)

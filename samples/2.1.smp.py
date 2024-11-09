@@ -1,7 +1,8 @@
-# プログラムマニュアル2.1 for python
-import  config
 import __relimport
+import config
 from csjwindowspossdk import ESCPOSConst, ESCPOSPrinter
+
+
 printer = ESCPOSPrinter()
 printer.SetCommProperties(ESCPOSConst.CMP_COM_BAUDRATE_9600,
                           ESCPOSConst.CMP_COM_PARITY_NONE,

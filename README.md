@@ -49,4 +49,30 @@ DLL ファイルを別の場所に配置したい場合は、[`/samples/setDllPa
 2. **一定秒数ごとの自動 Bluetooth 接続のタイミングと重なっている場合**
    - **原因:** Bluetooth 設定を確認すると、一定時間ごとにプリンタと自動接続が行われているようです。このタイミングでは SDK の `Connect` を実行できません。
 
----
+# git clone
+
+```bash
+git clone https://github.com/mizunoshota2001/tutorial-CSJWindowsPOSSDK-for-python.git
+```
+
+# Project Structure
+
+配置例
+
+```bash
+tutorial-CSJWindowsPOSSDK-for-python/
+    ├── .gitattributes
+    ├── .gitignore
+    ├── assets/
+    ├── csjwindowspossdk/
+    │   ├── __init__.py
+    │   ├── ESCPOSConst.py
+    │   ├── ESCPOSPrinter.py
+    │   └── Library/
+    │       ├── CSJPOSLib.dll
+    │       ├── CSJPOSLibW32.dll
+    │       └── CSJPOSLibW64.dll
+    ├── ...
+```
+
+# Python3.11

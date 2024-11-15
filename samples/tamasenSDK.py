@@ -30,9 +30,11 @@ class Printer:
         print("Printing receipt...")
         self.printer.TransactionPrint(ESCPOSConst.CMP_TP_TRANSACTION)
 
+        # ロゴの印刷
         self.printer.PrintBitmap(BITMAP_PATH,
                                  ESCPOSConst.CMP_ALIGNMENT_CENTER)
 
+        # 日付と店舗名
         self.printer.PrintText(f"テスト店    {order_date.strftime('%Y/%m/%d %H:%M:%S')}\n",
                                ESCPOSConst.CMP_ALIGNMENT_LEFT,
                                ESCPOSConst.CMP_FNT_DEFAULT,
@@ -42,6 +44,8 @@ class Printer:
                                ESCPOSConst.CMP_FNT_UNDERLINE | ESCPOSConst.CMP_FNT_BOLD,
                                ESCPOSConst.CMP_TXT_2WIDTH | ESCPOSConst.CMP_TXT_1HEIGHT)
 
+        # 購入された商品の表示
+        # 上から、名前、単価、個数、合計
         for i in range(len(menuL)):
             if orderL[i]['quantity'] > 0:
                 self.printer.PrintPaddingText(f"{menuL[i]['name']}",
@@ -66,17 +70,21 @@ class Printer:
                 たません用の設定。文字を細かくして対応しよう
                 '''
 
+        # noteの表示
+        # POSでは、卵抜き、などの表示がある場合に使用
         if note:
             self.printer.PrintText(f"{note}\n",
                                    ESCPOSConst.CMP_ALIGNMENT_LEFT,
                                    ESCPOSConst.CMP_FNT_DEFAULT,
                                    ESCPOSConst.CMP_TXT_1WIDTH | ESCPOSConst.CMP_TXT_1HEIGHT)
 
+        # 区切り線(アンダーバー)
         self.printer.PrintText("                \n",
                                ESCPOSConst.CMP_ALIGNMENT_CENTER,
                                ESCPOSConst.CMP_FNT_UNDERLINE | ESCPOSConst.CMP_FNT_BOLD,
                                ESCPOSConst.CMP_TXT_2WIDTH | ESCPOSConst.CMP_TXT_1HEIGHT)
 
+        # 合計、お預り、おつりの表示
         for i in [["合  計", total], ["お預り", payment], ["おつり", payment - total]]:
             self.printer.PrintText(f"{i[0]}",
                                    ESCPOSConst.CMP_ALIGNMENT_LEFT,
@@ -93,15 +101,19 @@ class Printer:
                                ESCPOSConst.CMP_FNT_DEFAULT,
                                ESCPOSConst.CMP_TXT_1WIDTH | ESCPOSConst.CMP_TXT_1HEIGHT)
 
+        # QRコードの印刷
         self.printer.PrintQRCode("https://www.fukuchiyama.ac.jp/", 4,
                                  ESCPOSConst.CMP_QRCODE_EC_LEVEL_Q,
                                  250)
 
+        # レシートの最後に表示する文字
+        # PCフォントを使用
         self.printer.PrintTextPCFont("\nThank you!\n",
                                      ESCPOSConst.CMP_ALIGNMENT_CENTER,
                                      "Arial", 10, ESCPOSConst.CMP_FNT_ITALIC,
                                      100, 100)
 
+        # 注文番号の表示
         self.printer.PrintText(f" {order_id} \n",
                                ESCPOSConst.CMP_ALIGNMENT_CENTER,
                                ESCPOSConst.CMP_FNT_REVERSE,
@@ -135,6 +147,7 @@ class Printer:
         ''' 
         """
 
+        # バーコードの印刷
         self.printer.PrintBarCode(f"{order_id:04}{order_date:%y%m%d%H}",
                                   ESCPOSConst.CMP_BCS_JAN13,
                                   50, 3,

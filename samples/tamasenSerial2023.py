@@ -55,10 +55,10 @@ for i in range(300,999):
         else:
             payment = int(payment)
             print(f"change:{payment-total}円\n-------------------------")
-            with open('sample.csv', 'a', newline='', encoding='utf-8') as f:
+            """ with open('sample.csv', 'a', newline='', encoding='utf-8') as f:
                 writer = csv.writer(f)
                 writer.writerow([i] + orderL + [total] + [note])
-                f.close
+                f.close """
             ser = serial.Serial('COM4', 9600, timeout = 0.1)
             #レシート
 

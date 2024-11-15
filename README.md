@@ -8,7 +8,8 @@ Citizen Systems 株式会社の Windows POS Print SDK を利用しています�
 
 ## 目次
 
-1. [SDK のダウンロード](#sdkのダウンロード)
+<!-- 1. [SDK のダウンロード](#sdk のダウンロード) -->
+aaaaaaa
 2. [不具合調査](#不具合調査)
 3. [接続失敗の原因](#接続失敗の原因)
 
@@ -56,21 +57,22 @@ git clone https://github.com/mizunoshota2001/tutorial-CSJWindowsPOSSDK-for-pytho
 ```
 
 # Project Structure
+
 ```bash
 tutorial-CSJWindowsPOSSDK-for-python/
     ├── .gitattributes
     ├── .gitignore
     ├── assets/
     ├── csjwindowspossdk/
+      ├── Library/
+      │   ├── CSJPOSLib.dll
+      │   ├── CSJPOSLibW32.dll
+      │   └── CSJPOSLibW64.dll
     │   ├── __init__.py
     │   ├── ESCPOSConst.py
     │   └── ESCPOSPrinter.py
     ├── docs/
     │   └── 講座用.pptx
-    ├── Library/
-    │   ├── CSJPOSLib.dll
-    │   ├── CSJPOSLibW32.dll
-    │   └── CSJPOSLibW64.dll
     ├── README.md
     ├── requirements.txt
     └── samples/
@@ -79,5 +81,30 @@ tutorial-CSJWindowsPOSSDK-for-python/
         ├── ...
 ```
 
-
 # Python3.11
+```bash
+pip install –r requirememts.txt
+```
+
+
+
+# セキュリティーがひっかる場合
+```bash
+System.NotSupportedException: ネットワーク上の場所からアセンブリを読み込もうとしました。これにより、以前のバージョンの .NET Framework で、アセンブリがサンドボックス化された可能性があります。このリリースの .NET Framework では、CAS ポリシーが既定で有効になっていないため、この読み込みは危険な場合があります。この読み込みがアセンブリのサンドボックス化を目的としない場合は、loadFromRemoteSources スイッチを有効にしてください。詳細については、http://go.microsoft.com/fwlink/?LinkId=155569 を参照してください。
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "c:\...\tutorial-CSJWindowsPOSSDK-for-python\samples\2.1.smp.py", line 6, in <module>
+    printer = ESCPOSPrinter()
+              ^^^^^^^^^^^^^^^
+  File "c:\...\tutorial-CSJWindowsPOSSDK-for-python\csjwindowspossdk\ESCPOSPrinter.py", line 24, in __init__
+    clr.AddReference(str(dllPath))
+System.IO.FileLoadException: ファイルまたはアセンブリ 'file:///c:\...\tutorial-CSJWindowsPOSSDK-for-python\csjwindowspossdk\Library\CSJPOSLib.dll'、またはその依存関係の 1 つが読み込めませんでした。操作はサポートされません。 (HRESULT からの例外:0x80131515)
+ファイル名 'file:///c:\...\tutorial-CSJWindowsPOSSDK-for-python\csjwindowspossdk\Library\CSJPOSLib.dll' です。'file:///c:\...\tutorial-CSJWindowsPOSSDK-for-python\csjwindowspossdk\Library\CSJPOSLib.dll' ---> System.NotSupportedException: ネットワーク上の場所からアセンブリを読み込もうとしました。これにより、以前のバージョンの .NET Framework で、アセンブリがサンドボックス化された可能性があります。このリリースの .NET Framework では、CAS ポリシーが既定で有効になっていないため、この読み込みは危険な場合があります。この読み込みがアセンブリのサンドボックス化を目的としない場合は、loadFromRemoteSources スイッチを有効にしてください。詳細については、http://go.microsoft.com/fwlink/?LinkId=155569 を参照してください。
+   場所 System.Reflection.RuntimeAssembly._nLoad(AssemblyName fileName, String codeBase, Evidence assemblySecurity, RuntimeAssembly locationHint, StackCrawlMark& stackMark, IntPtr pPrivHostBinder, Boolean throwOnFileNotFound, Boolean forIntrospection, Boolean suppressSecurityChecks)
+   場所 System.Reflection.RuntimeAssembly.InternalLoadAssemblyName(AssemblyName assemblyRef, Evidence assemblySecurity, RuntimeAssembly reqAssembly, StackCrawlMark& stackMark, IntPtr pPrivHostBinder, Boolean throwOnFileNotFound, Boolean forIntrospection, Boolean suppressSecurityChecks)
+   場所 System.Reflection.RuntimeAssembly.InternalLoadFrom(String assemblyFile, Evidence securityEvidence, Byte[] hashValue, AssemblyHashAlgorithm hashAlgorithm, Boolean forIntrospection, Boolean suppressSecurityChecks, StackCrawlMark& stackMark)
+   場所 System.Reflection.Assembly.LoadFrom(String assemblyFile)
+   場所 Python.Runtime.AssemblyManager.LoadAssemblyFullPath(String name)
+   場所 Python.Runtime.CLRModule.AddReference(String name)
+```
+- プロパティからセキュリティを許可してください。

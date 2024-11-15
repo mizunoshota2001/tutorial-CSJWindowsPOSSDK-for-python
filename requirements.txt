@@ -1,0 +1,4 @@
+pythonnet
+pyserial 
+Pillow 
+pytz

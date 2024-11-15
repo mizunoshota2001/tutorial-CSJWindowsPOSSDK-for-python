@@ -54,3 +54,30 @@ DLL ファイルを別の場所に配置したい場合は、[`/samples/setDllPa
 ```bash
 git clone https://github.com/mizunoshota2001/tutorial-CSJWindowsPOSSDK-for-python.git
 ```
+
+# Project Structure
+```bash
+tutorial-CSJWindowsPOSSDK-for-python/
+    ├── .gitattributes
+    ├── .gitignore
+    ├── assets/
+    ├── csjwindowspossdk/
+    │   ├── __init__.py
+    │   ├── ESCPOSConst.py
+    │   └── ESCPOSPrinter.py
+    ├── docs/
+    │   └── 講座用.pptx
+    ├── Library/
+    │   ├── CSJPOSLib.dll
+    │   ├── CSJPOSLibW32.dll
+    │   └── CSJPOSLibW64.dll
+    ├── README.md
+    ├── requirements.txt
+    └── samples/
+        ├── __relimport.py
+        ├── 2.1.smp.py
+        ├── ...
+```
+
+
+# Python3.11
